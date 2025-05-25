@@ -20,12 +20,14 @@
         <!-- Desktop grid layout -->
         <div class="hidden md:grid grid-cols-1 md:grid-cols-2 gap-5">
           <!-- Property 1 - Desktop -->
-          <PropertyDesktop
-            :videoStates="videoStates"
-            :slides="slides"
-            :data="data"
-            @toggle="toggleVideo"
-          />
+          <div v-for="(data) in realEstateDatas">
+            <PropertyDesktop
+              :videoStates="videoStates"
+              :slides="slides"
+              :data="data"
+              @toggle="toggleVideo"
+            />
+          </div>
         </div>
       </main>
     </div>

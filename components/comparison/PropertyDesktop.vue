@@ -109,7 +109,7 @@ const props = defineProps<{
   slides: Array<Record<string, any>>;
   data: object;
 }>();
-
+console.log(props.data)
 const desktopVideo1 = ref(props.videoStates.desktopVideo1);
 const videoStates = ref(props.videoStates);
 
