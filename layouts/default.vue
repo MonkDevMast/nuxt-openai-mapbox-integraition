@@ -124,6 +124,7 @@ onBeforeUnmount(() => {
                 src="/assets/images/chatbot.png"
                 alt=""
                 class="h-[60px] md:h-[80px] cursor-pointer"
+                @click="navigateHome"
               />
             </div>
             <div

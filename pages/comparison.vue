@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center relative pb-44 md:pb-0 top-20">
+  <div class="flex justify-center relative pb-44 md:pb-20 top-20">
     <div class="flex flex-col min-h-screen items-center !w-screen md:w-[70vw] text-white p-5">
       <main class="container flex-1 p-5 bg-transparent md:bg-black rounded-xl my-2.5">
         <h1 class="text-2xl mb-5">Comparison View</h1>

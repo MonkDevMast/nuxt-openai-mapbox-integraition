@@ -29,7 +29,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="h-full w-full">
+  <div class="h-full w-full pb-16">
     <transition v-if="isLoading" name="fade">
       <div class="flex justify-center items-center h-full w-full">
       </div>

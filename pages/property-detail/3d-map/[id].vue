@@ -59,7 +59,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-full w-full px-2">
+  <div class="h-full w-full px-2 pb-16">
     <div class="w-full h-full flex justify-center items-center">
       <div v-if="isLoading" key="loading" class="loading-spinner-container">
           <!-- <div class="loading-spinner"></div> -->
