@@ -8,10 +8,20 @@ import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import { computed } from 'vue';
 
-import SwiperDesktop from "~/components/Swiper/Desktop.vue";
-import SwiperMobile from "~/components/Swiper/Mobile.vue";
-
 const router = useRouter();
+
+const props = defineProps<{
+  datas: Array<Record<string, any>>;
+}>();
+
+const datas = props.datas;
+
+const emit = defineEmits<{
+  (e: 'collapseview'): void;
+  (e: 'goToProperty', index: number): void;
+}>();
+
+const isExpanded = defineModel('isExpanded');
 
 useHead({
   title: "Rechitta - Property List",
@@ -25,125 +35,21 @@ useHead({
 });
 
 const isLoading = ref(true);
-const isExpanded = ref(false);
+// const isExpanded = ref(false);
 const expanded = ref(false);
 const paginationVisible = computed(() => !isExpanded.value);
 const outerSwiperRef = ref<any>(null);
-const outerMobileSwiperRef = ref<any>(null);
 
 // Video control refs and state
 const videoRefs = ref<HTMLVideoElement[]>([]);
 const videoStates = ref<{isPlaying: boolean, hovered: boolean}[]>([]);
 
 const goToProperty = (i: number) => {
-  
-  const swiper = outerSwiperRef.value?.swiper;
-  if (swiper) {
-    swiper.allowTouchMove = false;
-    swiper.mousewheel.disable();
-  }
-
-  // Pause all videos when expanding
-  expanded.value = true
-  isExpanded.value = true
-  videoRefs.value.forEach((video, index) => {
-    if (video) {
-      video.pause();
-      if (videoStates.value[index]) {
-        videoStates.value[index].isPlaying = false;
-      }
-    }
-  });
-  
-  const outerSwiper = document.querySelector(".outer-swiper.swiper") as HTMLElement;
-  if (!outerSwiper) return;
-
-  const prevSlide = outerSwiper.querySelector(
-    ":scope > .swiper-wrapper > .swiper-slide-prev"
-  );
-  const nextSlide = outerSwiper.querySelector(
-    ":scope > .swiper-wrapper > .swiper-slide-next"
-  );
-  const activeSlide = outerSwiper.querySelector(
-    ":scope > .swiper-wrapper > .swiper-slide-active"
-  );
-
-  prevSlide?.classList.add("slide-out-left");
-  nextSlide?.classList.add("slide-out-right");
-  activeSlide?.classList.add("slide-up");
-
-  setTimeout(() => {
-    isExpanded.value = true;
-    activeSlide?.classList.add("expanded");
-    outerSwiper.classList.add("expanded");
-    
-    outerSwiper.style.marginBottom = "-80px";
-    const pagination = outerSwiper.querySelector('.swiper-pagination') as HTMLElement;
-    if (pagination) {
-      pagination.style.display = 'none';
-    }
-  }, 600);
+  emit("goToProperty", i);
 };
 
 const collapseView = () => {
-  const swiper = outerSwiperRef.value?.swiper;
-  if (swiper) {
-    swiper.allowTouchMove = true;
-    swiper.mousewheel.enable();
-  }
-  // Pause all videos when collapsing
-  expanded.value = false
-  videoRefs.value.forEach((video, index) => {
-    if (video) {
-      video.pause();
-      if (videoStates.value[index]) {
-        videoStates.value[index].isPlaying = false;
-      }
-    }
-  });
-
-  const outerSwiper = document.querySelector(".outer-swiper.swiper") as HTMLElement;
-  if (!outerSwiper) return;
-
-  // Add transition to both detail cards
-  const detailCards = document.querySelectorAll(".detail-card") as NodeListOf<HTMLElement>;
-  detailCards.forEach(card => {
-    card.style.transition = "transform 0.6s ease, opacity 0.5s ease";
-    card.style.transform = "translateY(100px)";
-    card.style.opacity = "0";
-  });
-
-  setTimeout(() => {
-    const prevSlide = outerSwiper.querySelector(
-      ":scope > .swiper-wrapper > .swiper-slide-prev"
-    );
-    const nextSlide = outerSwiper.querySelector(
-      ":scope > .swiper-wrapper > .swiper-slide-next"
-    );
-    const activeSlide = outerSwiper.querySelector(
-      ":scope > .swiper-wrapper > .swiper-slide-active"
-    );
-
-    prevSlide?.classList.remove("slide-out-left");
-    nextSlide?.classList.remove("slide-out-right");
-    activeSlide?.classList.remove("slide-up");
-    activeSlide?.classList.remove("expanded");
-    outerSwiper.classList.remove("expanded");
-
-    activeSlide?.classList.add("slide-down");
-
-    const pagination = outerSwiper.querySelector('.swiper-pagination') as HTMLElement;
-    if (pagination) {
-      pagination.style.display = 'flex';
-    }
-
-    outerSwiper.style.marginBottom = "0";
-
-    setTimeout(() => {
-      activeSlide?.classList.remove("slide-down");
-      isExpanded.value = false;
-    }, 400);
-  }, 400);
+  emit('collapseview');
 };
 
 const animateOnLoad = () => {
@@ -276,39 +182,6 @@ const onContentClick = (swiper: any, event: MouseEvent, slideIndex: number) => {
   // goToProperty(slideIndex + 1);
 };
 
-const onMobileSwiperClick = (swiper: any, event: MouseEvent) => {
-  if (isExpanded.value) return;
-
-  const clickedSlide = (event.target as HTMLElement).closest('.swiper-slide');
-  if (!clickedSlide) return;
-
-  const viewMoreBtn = (event.target as HTMLElement).closest('.view-more-button');
-  if (viewMoreBtn) return;
-
-  const videoElement = (event.target as HTMLElement).closest('video');
-  const videoControls = (event.target as HTMLElement).closest('.video-play-button');
-  if (videoElement || videoControls) {
-    event.stopPropagation();
-    return;
-  }
-
-  const slideIndex = Array.from(swiper.slides).indexOf(clickedSlide);
-  
-  if (!clickedSlide.classList.contains('swiper-slide-active')) {
-    const currentActiveSlide = swiper.slides[swiper.activeIndex];
-    
-    if (clickedSlide && currentActiveSlide) {
-      clickedSlide.classList.add('slide-to-center');
-      currentActiveSlide.classList.add('slide-out');
-    }
-    
-    swiper.slideTo(slideIndex);
-    return;
-  }
-  
-  // goToProperty(slideIndex + 1);
-};
-
 const onTouchStart = (swiper: any) => {
   
 };
@@ -376,150 +249,157 @@ onMounted(async () => {
     }, 50);
   }, 200);
 });
-
-// fetch data from backend
-const realEstateDatas = ref([
-  {
-    var: '2BHK - Corner Unit',
-    view: 'Full Burj Khalifa + Downtown Skyline',
-    unit: '1902',
-    size: '1260 sq ft',
-    floor: 'Floor 11',
-    price: 'AED 2,150,000',
-    features: [
-      'Smart Home Automation',
-      'Spacious Balcony',
-      'Premium Finishes',
-      'Concierge Access',
-      'Double Glazed Windows',
-    ],
-    bedrooms: '2',
-    bathrooms: '2',
-  },
-  {
-    var: '2BR Duplex',
-    view: 'Pool-Facing Premium',
-    unit: '1905',
-    size: '1560 sq ft',
-    floor: 'Podium Floor 2',
-    price: 'AED 2,150,000',
-    features: [
-      'Double-height Ceiling',
-      'Private Balcony',
-      'Walk-In Closet',
-      'Smart Entry System',
-      'Direct Amenity Access',
-    ],
-    bedrooms: '2',
-    bathrooms: '2',
-  },
-  {
-    var: '2BR Duplex',
-    view: 'Pool-Facing Premium',
-    unit: '1901',
-    size: '1560 sq ft',
-    floor: 'Podium Floor 2',
-    price: 'AED 2,150,000',
-    features: [
-      'Double-height Ceiling',
-      'Private Balcony',
-      'Walk-In Closet',
-      'Smart Entry System',
-      'Direct Amenity Access',
-    ],
-    bedrooms: '2',
-    bathrooms: '2',
-  }
-]);
 </script>
 
 <template>
-  <div class="h-full flex flex-col !ml-2 md:ml-0 justify-center items-center relative">
-    <!-- Loading overlay -->
-    <transition name="fade">
-      <div v-if="isLoading" class="">
-        <!-- <div class="loading-spinner"></div> -->
-      </div>
-    </transition>
-
-    <!-- Main content container -->
-    <div class="w-full flex-1 flex flex-col items-center justify-center relative ">
-      <!-- Swiper container -->
-      <div :class="`w-full h-50 flex  items-center justify-center relative `">
-        <!-- Desktop Swiper -->
-        <SwiperDesktop
-          @collapseview="collapseView"
-          @goToProperty="goToProperty"
-          :datas="realEstateDatas"
-          v-model:isExpanded="isExpanded"
-          />
-
-        <!-- Mobile Swiper -->
-        <SwiperMobile
-          @collapseview="collapseView"
-          @goToProperty="goToProperty"
-          :datas="realEstateDatas"
-          v-model:isExpanded="isExpanded"
-          />
-      </div>
-    </div>
-    </div>
-   
-    <div class="flex justify-center relative bottom-[15rem] mb-44 md:bottom-32">
-      <transition name="fade-slide">
-        <div 
-          v-if="isExpanded" 
-          class="w-full max-w-[1300px] md:w-[73rem] px-4 mt-4 relative mb-10"
+  <!-- Desktop Swiper -->
+  <Swiper
+    ref="outerSwiperRef"
+    :effect="'coverflow'"
+    :modules="[EffectCoverflow, ...(isExpanded ? [] : [Pagination])]"
+    :pagination="!isExpanded ? { clickable: true, enabled: paginationVisible } : false"
+    :slidesPerView="'auto'"
+    :spaceBetween="30"
+    :centeredSlides="true"
+    :loop="true"
+    :allowTouchMove="!expanded"
+    :freeMode="!isExpanded"
+    :initialSlide="1"
+    :mousewheel="{
+      enabled: true,
+      forceToAxis: true,
+      releaseOnEdges: true,
+      sensitivity: 1,
+      thresholdDelta: 50,
+      thresholdTime: 500
+    }"
+    :coverflowEffect="{
+      rotate: 0,
+      stretch: -100,
+      depth: 200,
+      modifier: 1.5,
+      slideShadows: false,
+    }"
+      @click="(swiper, event) => onSwiperClick(swiper, event)"
+      @slideChange="onSlideChange"
+      @touchStart="(swiper) => onTouchStart(swiper)"
+    
+    :class="`outer-swiper h-[70vh] hidden! md:block! w-full max-w-none`"
+  >
+    <SwiperSlide
+      v-for="(data, i) in datas"
+      :key="data.unit"
+      class="max-w-fit h-full mr-2 xl:mx-0"
+      @click.stop=""
+    >
+      <div
+        class="flex flex-col bg-black md:bg-white/5 backdrop-blur-xl rounded-3xl shadow-lg py-5 md:p-9 max-w-[1200px] w-full h-full overflow-hidden transition-all duration-300 ease-in-out relative div-card"
+        @click="(event) => onContentClick(outerSwiperRef.swiper, event, i-1)"
+      >
+        <div
+          class="text-white w-full flex items-center justify-between gap-2 sm:gap-0 mb-4 max-h-[17%] sm:max-h-[10%]"
         >
-          <!-- Mid Card -->
-          <div 
-            :style="{ boxShadow: '0px 0px 150px 0px rgba(167, 167, 167, 0.5)' }"
-            class="hide-scrollbar flex text-white gap-6 bg-black backdrop-blur-xl rounded-3xl shadow-lg py-8 px-4 sm:py-9 pr-8 md:px-9 w-full overflow-x-auto overflow-y-hidden whitespace-nowrap scroll-smooth transition-all duration-300 ease-in-out relative detail-card text-xs sm:text-sm mb-8"
-          >
-            <div class="flex items-center gap-1 flex-shrink-0">
-              <Icon name="line-md:home-simple-twotone" class="text-[rgba(242,249,253,0.7)] hidden sm:block" />
-              <span class="text-[rgba(242,249,253,0.7)]">Unit Type Name : <span class="text-white">2BHK</span></span>
-            </div>
-            <div class="flex items-center gap-1 flex-shrink-0">
-              <Icon name="famicons:apps-sharp" class="text-[rgba(242,249,253,0.7)] hidden sm:block" />
-              <span class="text-[rgba(242,249,253,0.7)]">Area : <span class="text-white">1,260 sq ft</span></span>
-            </div>
-            <div class="flex items-center gap-1 flex-shrink-0">
-              <Icon name="ph:bookmark-simple" class="text-[rgba(242,249,253,0.7)] hidden sm:block" />
-              <span class="text-[rgba(242,249,253,0.7)]">Units Available : <span class="text-white">11</span></span>
-            </div>
-            <div class="flex items-center gap-1 flex-shrink-0">
-              <Icon name="material-symbols:calendar-month-outline" class="text-[rgba(242,249,253,0.7)] hidden sm:block" />
-              <span class="text-[rgba(242,249,253,0.7)]">Time for Completion : <span class="text-white">11 months</span></span>
-            </div>
-            <div class="flex items-center gap-1 flex-shrink-0">
-              <Icon name="ph:sun" class="text-[rgba(242,249,253,0.7)] hidden sm:block" />
-              <span class="text-[rgba(242,249,253,0.7)]">View : <span class="text-white">Burj View</span></span>
-            </div>
+          <div class="text-[20px] sm:text-[24px] font-medium leading-none">
+            Unit {{ data.unit }}
           </div>
-
-          <!-- Map Section -->
-          <div
-            :style="{ boxShadow: '0px 10px 60px 15px rgba(255, 255, 255, 0.4)' }"
-            class="flex flex-col bg-black backdrop-blur-xl rounded-3xl shadow-lg p-9 w-full overflow-hidden transition-all duration-300 ease-in-out relative detail-card"
-          >
-            <div class="text-white w-full text-2xl mb-4 max-h-[15%] flex items-center justify-between gap-2 sm:gap-0">
-              Location
-            </div>
-            <div class="w-full h-[400px]">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3609.249543689662!2d55.2707823150116!3d25.20484928389806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f434570f1c4e3%3A0x403f651eba6edc8!2sBurj%20Khalifa!5e0!3m2!1sen!2sae!4v1616857199386!5m2!1sen!2sae"
-                class="h-full w-full"
-                style="border: 0; border-radius: 16px"
-                allowfullscreen="true"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
+          <div class="sm:ml-auto">
+            <div
+              class="px-3 py-2 flex items-center border border-neutral-700 text-sm mt-2 sm:mt-0 sm:text-sm font-normal rounded-lg"
+            >
+              Price :
+              <span>
+                <img src="/assets/images/dollar.svg" class="w-4 h-4 mx-1" />
+              </span>
+              {{ data.price }}
             </div>
           </div>
         </div>
-      </transition>
-    </div>
+        <div class="overflow-x-clip pb-2 h-full max-h-[85%]">
+          <Swiper
+            :modules="[Pagination]"
+            :pagination="{ clickable: true }"
+            :spaceBetween="10"
+            :slidesPerView="1"
+            :breakpoints="{
+              500: {
+                slidesPerView: 'auto',
+                spaceBetween: 10,
+              },
+            }"
+            @click.stop
+            @touchStart.stop
+            @slideChange="onInnerSwiperSlideChange"
+            class="inner-swiper px-3 2xl:h-full h-full"
+          >
+            <!-- Video Slide -->
+            <SwiperSlide 
+              class="w-[650px]! h-full relative mx-2 md:mx-0 video-container"
+              @mouseenter="setVideoHover(i-1, true)"
+              @mouseleave="setVideoHover(i-1, false)"
+            >
+              <video
+                :ref="el => videoRefs[i-1] = el as HTMLVideoElement"
+                controls
+                class="w-full h-full object-cover rounded-lg"
+                src="/assets/videos/unit-video.mp4"
+                @play="onVideoPlay(i-1)"
+                @pause="onVideoPause(i-1)"
+                @ended="onVideoEnded(i-1)"
+              >
+                Your browser does not support the video tag.
+              </video>
+              <div
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 video-play-button"
+                @click="toggleVideo(i-1, $event)"
+              >
+                <img 
+                  src="assets/images/video-play.svg" 
+                  alt="video play" 
+                  :class="{'opacity-0': videoStates[i-1]?.isPlaying && !videoStates[i-1]?.hovered, 'opacity-100': !videoStates[i-1]?.isPlaying || videoStates[i-1]?.hovered}"
+                  class="transition-opacity duration-300"
+                />
+              </div>
+            </SwiperSlide>
+
+            <!-- Image Slides -->
+            <SwiperSlide class="w-[650px]! h-full">
+              <img
+                src="/assets/images/units/unit1.png"
+                alt="Image 1"
+                class="h-full w-full object-cover rounded-2xl 2xl:h-full"
+              />
+            </SwiperSlide>
+            <SwiperSlide class="w-[650px]! h-full">
+              <img
+                src="/assets/images/units/unit1.png"
+                alt="Image 1"
+                class="h-full w-full object-cover rounded-2xl 2xl:h-full"
+              />
+            </SwiperSlide>
+            <SwiperSlide class="w-[650px]! h-full">
+              <img
+                src="/assets/images/units/unit1.png"
+                alt="Image 1"
+                class="h-full w-full object-cover rounded-2xl 2xl:h-full"
+              />
+            </SwiperSlide>
+          </Swiper>
+        </div>
+
+        <div class="w-full flex justify-end">
+          <div
+          @click.stop="isExpanded ? collapseView() : goToProperty(i)"
+          class="text-sm flex align-end  w-fit justify-end text-[#CBCBCB] mt-3 mr-2 sm:mr-0 h-[3%] cursor-pointer sm:h-[5%] view-more-button"
+        >
+          <span>
+            {{ isExpanded ? 'Show Less' : 'View More' }}
+          </span>
+        </div>
+        </div>
+        
+      </div>
+    </SwiperSlide>
+  </Swiper>
 </template>
 
 <style >
@@ -633,9 +513,6 @@ const realEstateDatas = ref([
   transition: margin-bottom 0.3s ease;
 }
 
-.outer-mobile-swiper {
-  /* box-shadow: 0px 0px 100px 0px rgba(167, 167, 167, 0.4) */
-}
 .outer-swiper .swiper-slide {
   width: auto !important;
   height: 100% !important;
@@ -648,7 +525,7 @@ const realEstateDatas = ref([
 }
 
 .outer-swiper .swiper-pagination,
-.outer-mobile-swiper .swiper-pagination {
+.swiper-pagination {
   position: absolute;
   bottom: -40px;
   left: 0;
@@ -660,14 +537,14 @@ const realEstateDatas = ref([
 }
 
 @media (max-width: 768px) { 
-  .outer-mobile-swiper .swiper-pagination {
+  .swiper-pagination {
     margin-bottom: 10px;
     justify-content: start; 
   }
 }
 
 .outer-swiper .swiper-pagination-bullet,
-.outer-mobile-swiper .swiper-pagination-bullet {
+.swiper-pagination-bullet {
   background: #5c5c5c;
   width: 37.257px;
   height: 5.29px;
@@ -710,17 +587,8 @@ const realEstateDatas = ref([
 }
 
 .outer-swiper .swiper-pagination-bullet.swiper-pagination-bullet-active,
-.outer-mobile-swiper .swiper-pagination-bullet.swiper-pagination-bullet-active {
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
   background: #33c3f0;
-}
-
-.mobile-inner-swiper.swiper {
-  overflow-x: visible !important;
-  overflow-y: visible !important;
-}
-
-.mobile-inner-swiper.swiper .swiper-pagination {
-  display: flex;
 }
 
 .inner-swiper.swiper {
@@ -901,7 +769,7 @@ video[controls]:hover + .video-play-button {
 
 /* Improved touchpad scrolling */
 .outer-swiper .swiper-wrapper,
-.outer-mobile-swiper .swiper-wrapper {
+.swiper-wrapper {
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   touch-action: pan-x;
@@ -914,17 +782,6 @@ video[controls]:hover + .video-play-button {
 
 /* Add these styles to the existing CSS section */
  
-.outer-mobile-swiper .swiper-slide:not(.swiper-slide-active) .div-card {
-  /* Remove this style */
-}
-
-.outer-mobile-swiper.swiper{
-  box-shadow: 0px 0px 100px 0px rgba(167, 167, 167, 0.4) ;
-
-}
-
- 
-
 /* Update the media query to remove the override */
 @media (max-width: 768px) {
   .outer-swiper.swiper {
@@ -952,43 +809,6 @@ video[controls]:hover + .video-play-button {
 /* Remove active slide restriction for video controls */
 .swiper-slide:not(.swiper-slide-active) .video-play-button {
   display: block;
-}
-
-/* Add shadow to all mobile swiper cards */
- 
-
-/* Update mobile swiper styles */
-.outer-mobile-swiper.swiper {
-  overflow: hidden !important;
-}
-
-.outer-mobile-swiper .swiper-slide {
-  width: 100% !important;
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
-}
-
-.outer-mobile-swiper .swiper-slide-active {
-  opacity: 1;
-}
-
-.outer-mobile-swiper .swiper-slide-active .div-card {
-  background: #000;
-  
-  position: relative;
-  z-index: 30;
-}
-
-/* Add glow effect to active mobile slide */
-.outer-mobile-swiper .swiper-slide-active .div-card::before {
-  content: "";
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  border-radius: 24px;
-  z-index: -1;
-  filter: blur(10px);
 }
 
 /* Add these styles to prevent outer swiper interaction when using inner swiper */
