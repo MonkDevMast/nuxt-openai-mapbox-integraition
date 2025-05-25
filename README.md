@@ -1,0 +1,1 @@
+# nuxt-openai-mapbox-integraition
