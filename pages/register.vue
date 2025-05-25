@@ -333,6 +333,8 @@
   import { Pagination } from "swiper/modules";
   import MainSection from '~/components/VoiceInput.vue';
   import InputField from '~/components/InputField.vue';
+  import { usePageLayoutStore } from '~/stores/pagelayoutStore';
+  const store = usePageLayoutStore();
   const router = useRouter();
   
   // definePageMeta({
@@ -353,7 +355,8 @@
   const isActive = ref(false);
   
   const navigateHome = () => {
-    router.push('/')
+    store.setLayout('main');
+    // router.push('/')
   }
   
   const toggleMic = () => {
@@ -365,7 +368,8 @@
   };
   
   const submit = () => {
-    router.push("/confirmation");
+    store.setLayout('/comfirmation');
+    // router.push("/confirmation");
   };
   
   const slides = [

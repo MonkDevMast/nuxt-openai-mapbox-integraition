@@ -1,6 +1,31 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import MainSection from '~/components/VoiceInput.vue';
+
+import { usePageLayoutStore } from '~/stores/pagelayoutStore';
+import { createPinia } from 'pinia';
+import { createApp } from 'vue';
+import App from '~/app.vue';
+
+import DefaultLayout from '~/layouts/default.vue';
+
+import PropertyList from '~/pages/property-list.vue';
+import Comparison from '~/pages/comparison.vue';
+import Register from '~/pages/register.vue';
+import Text from '~/pages/text.vue';
+import Confirmation from '~/pages/confirmation.vue';
+import Video from '~/pages/property-detail/videos/[id].vue';
+import Image from '~/pages/property-detail/images/[id].vue';
+import Map from '~/pages/property-detail/map/[id].vue';
+import ThreeDimentionalMap from '~/pages/property-detail/3d-map/[id].vue';
+
+// store.setLayout();
+const pinia = createPinia();
+const app = createApp(App);
+
+app.use(pinia);
+
+const store = usePageLayoutStore();
 definePageMeta({
   layout: false,
 });
@@ -30,12 +55,18 @@ const toggleMic = () => {
 const micText = ref("Rachitta is Listening....");
 
 function goToProperties() {
-  router.push("/property-list");
+  store.setLayout('propertyList');
+  console.log(store.pagelayout)
+  // router.push("/property-list");
+}
+
+function navigateHome() {
+  store.setLayout('main');
 }
 </script>
 
 <template>
-  <div class="relative h-full w-[100vw] overflow-hidden text-white">
+  <div class="relative h-full w-[100vw] overflow-hidden text-white" v-if="store.pagelayout == 'main'">
     <!-- Background Video -->
     <video
     autoplay
@@ -58,7 +89,7 @@ function goToProperties() {
           src="/assets/images/richitta-logo.svg"
           alt="Rechitta Logo cursor-pointer"
           class="h-5 cursor-pointer"
-          @click="$router.push('/')"
+          @click="navigateHome"
         />
         <img
           src="/assets/images/anax-logo.svg"
@@ -71,9 +102,8 @@ function goToProperties() {
       <!-- Main Section -->
     
     <div class="lg:h-[75vh] sm:h-[78vh] h-[88vh] py-3 px-3 flex flex-col justify-end items-center text-center">
-       <div class="transition-all duration-500" :class="{ 'translate-y-10 opacity-0': isTransitioning }">
+       <div class="transition-all duration-500" >
          <MainSection 
-          :is-transitioning="isTransitioning"
           :mic-text="micText"
           :multi="false"
           :is-active="isActive"
@@ -106,4 +136,15 @@ function goToProperties() {
       </div>
     </div>
   </div>
+  <DefaultLayout v-else-if="store.pagelayout !== 'main'">
+    <Comparison v-if="store.pagelayout == '/comparison'" />
+    <Text v-else-if="store.pagelayout == '/text'" />
+    <Video v-else-if="store.pagelayout == '/property-detail/videos/1701'" />
+    <Image v-else-if="store.pagelayout == '/property-detail/images/1701'" />
+    <Map v-else-if="store.pagelayout == '/property-detail/map/1701'" />
+    <ThreeDimentionalMap v-else-if="store.pagelayout == '/property-detail/3d-map/17011'" />
+    <Register v-else-if="store.pagelayout == '/register'"/>
+    <Confirmation v-else-if="store.pagelayout == '/comfirmation'" />
+    <PropertyList v-else/>
+  </DefaultLayout>
 </template>

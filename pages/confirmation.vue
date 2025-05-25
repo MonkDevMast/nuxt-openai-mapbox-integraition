@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import MainSection from '~/components/VoiceInput.vue';
-definePageMeta({
-  layout: false,
-});
+import { usePageLayoutStore } from '~/stores/pagelayoutStore';
+const store = usePageLayoutStore();
+
+// definePageMeta({
+//   layout: false,
+// });
 const router = useRouter();
 useHead({
   title: "Rechitta",
@@ -27,7 +30,8 @@ const toggleMic = () => {
 const micText = ref("Rachitta is Listening....");
 
 function goToProperties() {
-  router.push("/property-list");
+  store.setLayout('propertyList');
+  // router.push("/property-list");
 }
 </script>
 
@@ -51,45 +55,37 @@ function goToProperties() {
     <div class="relative z-10 flex flex-col h-full w-full bg-0">
       <!-- Top Logos -->
       <div class="flex justify-between items-center pt-6 px-9 h-[12vh]">
-        <img
+        <!-- <img
           src="/assets/images/richitta-logo.svg"
           alt="Rechitta Logo cursor-pointer"
           class="h-3 lg:h-5 cursor-pointer"
           @click="$router.push('/')"
-        />
+        /> -->
 
-        <div class="absolute top-12 right-8 bg-[#90dfff] p-4 rounded-lg shadow-lg w-64"
-        
-        :style="{ 
-  boxShadow: '0px 0px 100px 20px rgba(144, 223, 255, 1.5)' 
-}">
-      <div class="text-blue-900 font-medium text-lg">Thank You!</div>
-      <div class="text-blue-900 text-sm mt-1">
-        Your interest in Unit [###] has been successfully registered.
-      </div>
-    </div>
-      </div>
-
-
-      
-    
-     
-      <Transition name="slide-up" appear>
-          <div  class="absolute hidden md:block md:right-5 md:bottom-2">
-            <MainSection 
-              :mic-text="micText"
-              :multi="true"
-              :is-active="isActive"
-              message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
-              @toggle="toggleMic"
-            />
+        <div class="absolute top-12 right-8 mt-5 bg-[#90dfff] p-4 rounded-lg shadow-lg w-64"
+          :style="{ 
+            boxShadow: '0px 0px 100px 20px rgba(144, 223, 255, 1.5)' 
+          }">
+          <div class="text-blue-900 font-medium text-lg">Thank You!</div>
+          <div class="text-blue-900 text-sm mt-1">
+            Your interest in Unit [###] has been successfully registered.
           </div>
-        </Transition>
-        
-     
-        <div
+        </div>
+      </div>
+      <!-- <Transition name="slide-up" appear>
+        <div  class="absolute hidden md:block md:right-5 md:bottom-2">
+          <MainSection 
+            :mic-text="micText"
+            :multi="true"
+            :is-active="isActive"
+            message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
+            @toggle="toggleMic"
+          />
+        </div>
+      </Transition> -->
+      <!-- <div
         class="absolute bottom-0 left-0 w-full h-[15%] md:h-[20%] text-white flex md:hidden"
-      >
+        >
         <Transition name="slide-up" appear>
           <div class="relative h-full w-full">
             <div
@@ -114,7 +110,7 @@ function goToProperties() {
             </div>
           </div>
         </Transition>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

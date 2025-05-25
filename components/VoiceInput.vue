@@ -58,7 +58,7 @@ const handleTextClick = () => {
   <div class="relative w-full">
     <div
       class="flex gap-4 sm:gap-4 mx-3 sm:mx-0 mb-3 sm:mb-0 z-50 transition-all duration-1000 ease-in-out"
-      :class="{ 'translate-y-20 opacity-0': isTransitioning, 'items-end relative bottom-0': !showInput }"
+      :class="{ 'translate-y-20 opacity-1': isTransitioning, 'items-end relative bottom-0': !showInput }"
     >
       <div
         @click="handleTextClick"

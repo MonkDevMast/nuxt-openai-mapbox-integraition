@@ -97,6 +97,8 @@
 </template>
 
 <script setup lang="ts">
+import { usePageLayoutStore } from '~/stores/pagelayoutStore';
+const store = usePageLayoutStore();
 const router = useRouter();
 
 const props = defineProps<{
@@ -114,7 +116,9 @@ const toggleMicrophone = () => {
 };
 
 const handleNavigation = (page: string) => {
-  router.push(page)
+  store.setLayout(page);
+  console.log(store.pagelayout);
+  // router.push(page)
 };
 </script>
 
