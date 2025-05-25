@@ -99,7 +99,7 @@ onMounted(async () => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .inner-image-swiper.swiper {
   overflow-y: visible !important;
   overflow-x: clip !important;

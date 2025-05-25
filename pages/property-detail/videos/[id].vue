@@ -218,7 +218,7 @@ const pauseAllVideosExcept = (index: number) => {
 }
 .outer-video-swiper .swiper-pagination {
   position: absolute;
-  bottom: -40px;
+  /* bottom: -40px; */
   left: 0;
   right: 0;
   text-align: center;

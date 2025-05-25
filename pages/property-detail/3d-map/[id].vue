@@ -83,7 +83,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style>
+<style scoped>
 @import "mapbox-gl/dist/mapbox-gl.css";
 
 .map-box {

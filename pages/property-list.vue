@@ -522,7 +522,7 @@ const realEstateDatas = ref([
     </div>
 </template>
 
-<style >
+<style scoped>
 /* Loading overlay styles */
 .loading-overlay {
   position: fixed;
