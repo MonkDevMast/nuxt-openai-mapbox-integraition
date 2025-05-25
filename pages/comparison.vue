@@ -6,205 +6,13 @@
 
         <div class="md:hidden overflow-x-auto pb-4 -mx-5 px-5">
           <div class="flex gap-5" style="width: max-content">
-            <!-- Property 1 - Mobile -->
-            <div class="bg-[#0e0e0e] rounded-lg p-4 flex flex-col gap-4" style="width: 80vw">
-              <div class="flex justify-between items-start">
-                <div>
-                  <h2 class="text-lg font-bold">2BHK - Corner Unit</h2>
-                  <p class="text-sm text-gray-400">View : Full Burj Khalifa + Downtown Skyline</p>
-                </div>
-                <div class="text-sm text-gray-400">Unit: 1902</div>
-              </div>
-              <div class="swiper-container outer-swiper relative mb-10 h-[16rem]">
-                <swiper
-                  :modules="[Pagination]"
-                  :pagination="{ clickable: true }"
-                  :slides-per-view="1.2"
-                  :space-between="10"
-                  class="rounded-lg"
-                >
-                  <!-- Video as first slide -->
-                  <swiper-slide>
-                    <div 
-                      class="relative  w-[70vw]  rounded-2xl h-[16rem] overflow-hidden"
-                      @click="toggleVideo('mobileVideo1')"
-                    >
-                      <video 
-                        ref="mobileVideo1"
-                        class="w-full h-full object-cover"
-                        muted
-                        loop
-                        playsinline
-                      >
-                        <source src="/assets/videos/unit-video.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                      </video>
-                      <div 
-                        class="absolute inset-0 flex items-center justify-center"
-                        v-if="!videoStates.mobileVideo1"
-                      >
-                        <button class="p-2 bg-opacity-50 rounded-full">
-                          <img
-                            src="assets/images/video-play.svg"
-                            alt="video play"
-                            class="w-[40px] sm:w-[60px]"
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  </swiper-slide>
-                  
-                  <!-- Image slides -->
-                  <swiper-slide v-for="(slide, index) in slides" :key="index">
-                    <div class="h-[16rem]">
-                      <img
-                        :src="slide"
-                        alt="Property Image" 
-                        class="w-full h-full object-cover rounded-2xl"
-                      /> 
-                    </div>
-                  </swiper-slide>
-                </swiper>
-              </div>
-
-              <div class="flex justify-between">
-                <span>Size: 1260 sq ft</span>
-                <span>Floor 11</span>
-              </div>
-
-              <div class="flex justify-between items-center py-2.5 border-t border-b border-gray-700">
-                <div>Price</div>
-                <div class="font-bold">AED 2,150,000</div>
-              </div>
-
-              <div class="flex flex-col gap-2.5">
-                <h3 class="text-base">Features:</h3>
-                <ul class="flex flex-col gap-2 px-4">
-                  <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Smart Home Automation</li>
-                  <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Spacious Balcony</li>
-                  <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Premium Finishes</li>
-                  <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Concierge Access</li>
-                  <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Double Glazed Windows</li>
-                </ul>
-              </div>
-
-              <div class="flex flex-col gap-1">
-                <div class="flex border-t py-2.5 border-b border-gray-700 justify-between">
-                  <span>Bedrooms</span>
-                  <span>2</span>
-                </div>
-                <div class="flex border-b py-2.5 border-gray-700 justify-between">
-                  <span>Bathrooms</span>
-                  <span>2</span>
-                </div>
-              </div>
-
-              <div class="flex mt-auto gap-6 py-2.5">
-                <div class="flex gap-1 text-gray-100">
-                  <img src="/assets/images/3dex.svg" alt="3d icon"/> <span class="text-gray-200">3D Experience</span> 
-                </div>
-                <div class="flex gap-1"> <img src="/assets/images/cal.svg" alt="3d icon"/> <span class="text-gray-200">Book A Visit</span></div>
-              </div>
-            </div>
-
-            <!-- Property 2 - Mobile -->
-            <div class="bg-[#0e0e0e] rounded-lg p-4 flex flex-col gap-4" style="width: 80vw">
-              <div class="flex justify-between items-start">
-                <div>
-                  <h2 class="text-lg font-bold">2BR Duplex</h2>
-                  <p class="text-sm text-gray-400">View : Pool-Facing Premium</p>
-                </div>
-                <div class="text-sm text-gray-400">Unit: 1905</div>
-              </div>
-
-              <div class="swiper-container outer-swiper mb-10 relative h-[16rem]">
-                <swiper
-                  :modules="[Pagination]"
-                  :pagination="{ clickable: true }"
-                  :slides-per-view="1.2"
-                  :space-between="10"
-                  class="rounded-lg"
-                >
-                  <!-- Video as first slide -->
-                  <swiper-slide>
-                    <div 
-                      class="relative w-[70vw] h-[16rem] rounded-2xl overflow-hidden"
-                      @click="toggleVideo('mobileVideo2')"
-                    >
-                      <video 
-                        ref="mobileVideo2"
-                        class="w-full h-full object-cover"
-                        muted
-                        loop
-                        playsinline
-                      >
-                        <source src="/assets/videos/unit-video.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                      </video>
-                      <div 
-                        class="absolute inset-0 flex items-center justify-center"
-                        v-if="!videoStates.mobileVideo2"
-                      >
-                        <button class="p-2 bg-opacity-50 rounded-full">
-                          <img
-                            src="assets/images/video-play.svg"
-                            alt="video play"
-                            class="w-[40px] sm:w-[60px]"
-                          />
-                        </button>
-                      </div>
-                    </div>
-                  </swiper-slide>
-                  
-                  <!-- Image slides -->
-                  <swiper-slide v-for="(slide, index) in slides" :key="index">
-                    <img
-                      :src="slide"
-                      alt="Property Image" 
-                      class="w-full h-[16rem] object-cover rounded-2xl"
-                    />
-                  </swiper-slide>
-                </swiper>
-              </div>
-
-              <div class="flex justify-between">
-                <span>Size: 1560 sq ft</span>
-                <span>Podium Floor 2</span>
-              </div>
-
-              <div class="flex justify-between items-center py-2.5 border-t border-b border-gray-700">
-                <div>Price</div>
-                <div class="font-bold">AED 2,150,000</div>
-              </div>
-
-              <div class="flex flex-col gap-2.5">
-                <h3 class="text-base">Features:</h3>
-                <ul class="flex flex-col px-4 gap-2">
-                  <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Double-height Ceiling</li>
-                  <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Private Balcony</li>
-                  <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Walk-In Closet</li>
-                  <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Smart Entry System</li>
-                  <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Direct Amenity Access</li>
-                </ul>
-              </div>
-
-              <div class="flex flex-col gap-1">
-                <div class="flex border-t py-2.5 border-b border-gray-700 justify-between">
-                  <span>Bedrooms</span>
-                  <span>2</span>
-                </div>
-                <div class="flex border-b py-2.5 border-gray-700 justify-between">
-                  <span>Bathrooms</span>
-                  <span>2</span>
-                </div>
-              </div>
-
-              <div class="flex mt-auto gap-6 py-2.5">
-                <div class="flex gap-1 text-gray-100">
-                  <img src="/assets/images/3dex.svg" alt="3d icon"/> <span class="text-gray-200">3D Experience</span> 
-                </div>
-                <div class="flex gap-1"> <img src="/assets/images/cal.svg" alt="3d icon"/> <span class="text-gray-200">Book A Visit</span></div>
-              </div>
+            <div v-for="(data) in realEstateDatas">
+              <PropertyMobile
+                :videoStates="videoStates"
+                :slides="slides"
+                :data="data"
+                @toggle="toggleVideo"
+              />
             </div>
           </div>
         </div>
@@ -212,205 +20,12 @@
         <!-- Desktop grid layout -->
         <div class="hidden md:grid grid-cols-1 md:grid-cols-2 gap-5">
           <!-- Property 1 - Desktop -->
-          <div class="bg-[#0e0e0e] rounded-lg p-4 flex flex-col gap-4">
-            <div class="flex justify-between items-start">
-              <div>
-                <h2 class="text-lg font-bold">2BHK - Corner Unit</h2>
-                <p class="text-sm text-gray-400">View : Full Burj Khalifa + Downtown Skyline</p>
-              </div>
-              <div class="text-sm text-gray-400">Unit: 1902</div>
-            </div>
-            <div class="swiper-container outer-swiper relative mb-10 h-[16rem]">
-              <swiper
-                :modules="[Pagination]"
-                :pagination="{ clickable: true }"
-                :slides-per-view="1.2"
-                :space-between="10"
-                class="rounded-lg"
-              >
-                <!-- Video as first slide -->
-                <swiper-slide>
-                  <div 
-                    class="relative rounded-2xl h-[16rem] overflow-hidden"
-                    @click="toggleVideo('desktopVideo1')"
-                  >
-                    <video 
-                      ref="desktopVideo1"
-                      class="w-full h-full object-cover"
-                      muted
-                      loop
-                      playsinline
-                    >
-                      <source src="/assets/videos/unit-video.mp4" type="video/mp4">
-                      Your browser does not support the video tag.
-                    </video>
-                    <div 
-                      class="absolute inset-0 flex items-center justify-center"
-                      v-if="!videoStates.desktopVideo1"
-                    >
-                      <button class="p-2 bg-opacity-50 rounded-full">
-                        <img
-                          src="assets/images/video-play.svg"
-                          alt="video play"
-                          class="w-[40px] sm:w-[60px]"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </swiper-slide>
-                
-                <!-- Image slides -->
-                <swiper-slide v-for="(slide, index) in slides" :key="index">
-                  <div class="h-[16rem]">
-                    <img
-                      :src="slide"
-                      alt="Property Image" 
-                      class="w-full h-full object-cover rounded-2xl"
-                    /> 
-                  </div>
-                </swiper-slide>
-              </swiper>
-            </div>
-
-            <div class="flex justify-between">
-              <span>Size: 1260 sq ft</span>
-              <span>Floor 11</span>
-            </div>
-
-            <div class="flex justify-between items-center py-2.5 border-t border-b border-gray-700">
-              <div>Price</div>
-              <div class="font-bold">AED 2,150,000</div>
-            </div>
-
-            <div class="flex flex-col gap-2.5">
-              <h3 class="text-base">Features:</h3>
-              <ul class="flex flex-col gap-2 px-4">
-                <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Smart Home Automation</li>
-                <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Spacious Balcony</li>
-                <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Premium Finishes</li>
-                <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Concierge Access</li>
-                <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Double Glazed Windows</li>
-              </ul>
-            </div>
-
-            <div class="flex flex-col gap-1">
-              <div class="flex border-t py-2.5 border-b border-gray-700 justify-between">
-                <span>Bedrooms</span>
-                <span>2</span>
-              </div>
-              <div class="flex border-b py-2.5 border-gray-700 justify-between">
-                <span>Bathrooms</span>
-                <span>2</span>
-              </div>
-            </div>
-
-            <div class="flex mt-auto gap-6 py-2.5">
-              <div class="flex gap-1 text-gray-100">
-                <img src="/assets/images/3dex.svg" alt="3d icon"/> <span class="text-gray-200">3D Experience</span> 
-              </div>
-              <div class="flex gap-1"> <img src="/assets/images/cal.svg" alt="3d icon"/> <span class="text-gray-200">Book A Visit</span></div>
-            </div>
-          </div>
-
-          <!-- Property 2 - Desktop -->
-          <div class="bg-[#0e0e0e] rounded-lg p-4 flex flex-col gap-4">
-            <div class="flex justify-between items-start">
-              <div>
-                <h2 class="text-lg font-bold">2BR Duplex</h2>
-                <p class="text-sm text-gray-400">View : Pool-Facing Premium</p>
-              </div>
-              <div class="text-sm text-gray-400">Unit: 1905</div>
-            </div>
-
-            <div class="swiper-container outer-swiper mb-10 relative h-[16rem]">
-              <swiper
-                :modules="[Pagination]"
-                :pagination="{ clickable: true }"
-                :slides-per-view="1.2"
-                :space-between="10"
-                class="rounded-lg"
-              >
-                <!-- Video as first slide -->
-                <swiper-slide>
-                  <div 
-                    class="relative w-full h-[16rem] rounded-2xl overflow-hidden"
-                    @click="toggleVideo('desktopVideo2')"
-                  >
-                    <video 
-                      ref="desktopVideo2"
-                      class="w-full h-full object-cover"
-                      muted
-                      loop
-                      playsinline
-                    >
-                      <source src="/assets/videos/unit-video.mp4" type="video/mp4">
-                      Your browser does not support the video tag.
-                    </video>
-                    <div 
-                      class="absolute inset-0 flex items-center justify-center"
-                      v-if="!videoStates.desktopVideo2"
-                    >
-                      <button class="p-2 bg-opacity-50 rounded-full">
-                        <img
-                          src="assets/images/video-play.svg"
-                          alt="video play"
-                          class="w-[40px] sm:w-[60px]"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </swiper-slide>
-                
-                <!-- Image slides -->
-                <swiper-slide v-for="(slide, index) in slides" :key="index">
-                  <img
-                    :src="slide"
-                    alt="Property Image" 
-                    class="w-full h-[16rem] object-cover rounded-2xl"
-                  />
-                </swiper-slide>
-              </swiper>
-            </div>
-
-            <div class="flex justify-between">
-              <span>Size: 1560 sq ft</span>
-              <span>Podium Floor 2</span>
-            </div>
-
-            <div class="flex justify-between items-center py-2.5 border-t border-b border-gray-700">
-              <div>Price</div>
-              <div class="font-bold">AED 2,150,000</div>
-            </div>
-
-            <div class="flex flex-col gap-2.5">
-              <h3 class="text-base">Features:</h3>
-              <ul class="flex flex-col px-4 gap-2">
-                <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Double-height Ceiling</li>
-                <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Private Balcony</li>
-                <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Walk-In Closet</li>
-                <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Smart Entry System</li>
-                <li class="text-sm text-gray-300 relative pl-3.5 before:content-['•'] before:absolute before:left-0">Direct Amenity Access</li>
-              </ul>
-            </div>
-
-            <div class="flex flex-col gap-1">
-              <div class="flex border-t py-2.5 border-b border-gray-700 justify-between">
-                <span>Bedrooms</span>
-                <span>2</span>
-              </div>
-              <div class="flex border-b py-2.5 border-gray-700 justify-between">
-                <span>Bathrooms</span>
-                <span>2</span>
-              </div>
-            </div>
-
-            <div class="flex mt-auto gap-6 py-2.5">
-              <div class="flex gap-1 text-gray-100">
-                <img src="/assets/images/3dex.svg" alt="3d icon"/> <span class="text-gray-200">3D Experience</span> 
-              </div>
-              <div class="flex gap-1"> <img src="/assets/images/cal.svg" alt="3d icon"/> <span class="text-gray-200">Book A Visit</span></div>
-            </div>
-          </div>
+          <PropertyDesktop
+            :videoStates="videoStates"
+            :slides="slides"
+            :data="data"
+            @toggle="toggleVideo"
+          />
         </div>
       </main>
     </div>
@@ -425,6 +40,46 @@ import unit1 from "@/assets/images/units/unit1.png";
 import unit2 from "@/assets/images/units/unit2.png";
 import { Pagination } from "swiper/modules";
 import { ref } from 'vue';
+
+import PropertyMobile from "~/components/comparison/PropertyMobile.vue";
+import PropertyDesktop from "~/components/comparison/PropertyDesktop.vue";
+
+const realEstateDatas = ref([
+  {
+    var: '2BHK - Corner Unit',
+    view: 'Full Burj Khalifa + Downtown Skyline',
+    unit: '1902',
+    size: '1260 sq ft',
+    floor: 'Floor 11',
+    price: 'AED 2,150,000',
+    features: [
+      'Smart Home Automation',
+      'Spacious Balcony',
+      'Premium Finishes',
+      'Concierge Access',
+      'Double Glazed Windows',
+    ],
+    bedrooms: '2',
+    bathrooms: '2',
+  },
+  {
+    var: '2BR Duplex',
+    view: 'Pool-Facing Premium',
+    unit: '1905',
+    size: '1560 sq ft',
+    floor: 'Podium Floor 2',
+    price: 'AED 2,150,000',
+    features: [
+      'Double-height Ceiling',
+      'Private Balcony',
+      'Walk-In Closet',
+      'Smart Entry System',
+      'Direct Amenity Access',
+    ],
+    bedrooms: '2',
+    bathrooms: '2',
+  }
+]);
 
 const slides = [
   unit1,
