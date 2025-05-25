@@ -1,16 +1,16 @@
 <template>
     <img src="../assets/images//layout-bg.png" class="absolute inset-0 top-0 left-0 w-full h-full object-cover"/>
   
-    <div class="flex flex-col min-h-screen items-center text-white font-sans relative">
+    <div class="flex flex-col min-h-screen items-center text-white font-sans pb-24 relative">
       <!-- Header -->
-      <div class="absolute z-50 top-0 left-0 w-full flex justify-between items-center pt-5 sm:pt-4 pb-5 sm:pb-7 px-5 sm:px-9 lg:h-[15vh] h-[10%]  sm:bg-transparent">
+      <!-- <div class="absolute z-50 top-0 left-0 w-full flex justify-between items-center pt-5 sm:pt-4 pb-5 sm:pb-7 px-5 sm:px-9 lg:h-[15vh] h-[10%]  sm:bg-transparent">
         <img
           src="/assets/images/richitta-logo.svg"
           alt="Rechitta Logo"
           class="h-3 sm:h-5 cursor-pointer"
           @click="navigateHome"
         />
-      </div>
+      </div> -->
   
       <!-- Mobile Layout (form first, then card) -->
       <div class="w-full mt-32 md:mt-0 px-5 pb-20 md:hidden flex flex-col gap-6">
@@ -149,7 +149,7 @@
       </div>
   
       <!-- Desktop Layout (original layout) -->
-      <div class="hidden md:grid grid-cols-6 flex-1 px-8 gap-8 max-w-screen mx-auto w-full"
+      <div class="hidden pt-24 pb-24 md:grid grid-cols-6 flex-1 px-8 gap-8 max-w-screen mx-auto w-full"
       
       >
         <div class="col-span-4 flex items-center justify-center"
@@ -290,7 +290,7 @@
       </div>
   
       <!-- Footer (Desktop only) -->
-      <div
+      <!-- <div
         class="absolute bottom-0 left-0 w-full justify-between items-center px-9 item-center pb-6 pt-5 h-[13%] text-white hidden md:flex"
       >
         <div @click="navigateHome" class="flex items-center gap-3">
@@ -317,7 +317,7 @@
             />
           </div>
         </Transition>
-      </div>
+      </div> -->
     </div>
   </template>
   
@@ -335,9 +335,9 @@
   import InputField from '~/components/InputField.vue';
   const router = useRouter();
   
-  definePageMeta({
-    layout: 'blank',
-  });
+  // definePageMeta({
+  //   layout: 'default',
+  // });
   
   useHead({
     title: "Rechitta",

@@ -116,7 +116,7 @@ onBeforeUnmount(() => {
         class="absolute bottom-0 left-0 w-full h-[15%] md:h-[20%] text-white flex md:hidden"
       >
         <Transition name="slide-up" appear>
-          <div class="relative h-full w-full" v-if="showFooterContent">
+          <div class="relative z-50 h-full w-full" v-if="showFooterContent">
             <div
               class="absolute left-[50%] top-[0] transform -translate-x-1/2 -translate-y-1/2 rounded-full z-10 bg-black p-2"
             >

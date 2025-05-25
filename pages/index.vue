@@ -57,13 +57,13 @@ function goToProperties() {
         <img
           src="/assets/images/richitta-logo.svg"
           alt="Rechitta Logo cursor-pointer"
-          class="h-3 lg:h-5 cursor-pointer"
+          class="h-5 cursor-pointer"
           @click="$router.push('/')"
         />
         <img
           src="/assets/images/anax-logo.svg"
           alt="Anax Logo cursor-pointer"
-          class="h-[30px] lg:h-[60px] cursor-pointer"
+          class="h-[60px] cursor-pointer"
         />
       </div>
 
