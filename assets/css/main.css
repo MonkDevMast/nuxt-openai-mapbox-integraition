@@ -1,0 +1,38 @@
+@import url("../css/fonts.css");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+@import "tailwindcss";
+
+html,
+body {
+  font-family: "DM Sans", sans-serif;
+  height: 100%;
+}
+#__nuxt {
+  height: 100%;
+}
+
+@layer utilities {
+  /* .shadow-neon-glow {
+    box-shadow: 0 0 250px #1585c6, 0 0 175px #1585c6, 0 0 102px #1585c6,
+      0 0 51px #1585c6, 0 0 15px #1585c6, 0 0 7px #1585c6;
+  } */
+  .shadow-neon-glow {
+    box-shadow: 
+        0 0 300px #1585c6, 
+        0 0 200px #1585c6, 
+        0 0 125px #1585c6,
+        0 0 75px #1585c6, 
+        0 0 30px #1585c6, 
+        0 0 15px #1585c6;
+}
+}
+
+.page-enter-active,
+.page-leave-active {
+  @apply transition-opacity duration-700 ease-in-out;
+}
+
+.page-enter-from,
+.page-leave-to {
+  @apply opacity-0;
+}
