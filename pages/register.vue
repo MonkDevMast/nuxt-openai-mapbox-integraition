@@ -23,85 +23,52 @@
           <p class="text-[#999999] mb-6 text-sm">Let us know what you're looking for</p>
           
           <form @submit.prevent="submitForm">
-            <div class="mb-4">
-              <label class="block mb-1.5 text-sm text-[#cccccc]">Full Name <span class="text-[#50B9E0]">*</span></label>
-              <input 
-                type="text" 
-                v-model="formData.fullName" 
-                placeholder="Timothy Ricks" 
-                class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
-                required
-              />
-            </div>
-            
-            <div class="mb-4">
-              <label class="block mb-1.5 text-sm text-[#cccccc]">Email <span class="text-[#50B9E0]">*</span></label>
-              <input 
-                type="email" 
-                v-model="formData.email" 
-                placeholder="Enter your Email" 
-                class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
-                required
-              />
-            </div>
-            
-            <div class="mb-4">
-              <label class="block mb-1.5 text-sm text-[#cccccc]">Contact Number <span class="text-[#50B9E0]">*</span></label>
-              <vue-tel-input
-                v-model="formData.contactNumber"
-                :inputOptions="{
-                  placeholder: 'Enter your Number',
-                  classes: 'w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none'
-                }"
-                :dropdownOptions="{
-                  showDialCodeInSelection: true,
-                  showFlags: true,
-                  showDialCodeInList: true,
-                  dropdownClass: 'bg-[#1a1a1a] border border-[#333333] text-white'
-                }"
-                mode="international"
-                required
-              />
-            </div>
-            
-            <div class="mb-4">
-              <label class="block mb-1.5 text-sm text-[#cccccc]">Unit Number <span class="text-[#50B9E0]">*</span></label>
-              <input 
-                type="text" 
-                v-model="formData.unitNumber" 
-                placeholder="1702 (Select / Search From Available Units)" 
-                class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
-                required
-              />
-            </div>
-            
-            <div class="mb-4">
-              <label class="block mb-1.5 text-sm text-[#cccccc]">Broker Name <span class="text-[#50B9E0]">*</span></label>
-              <div class="relative">
-                <input 
-                  type="text" 
-                  v-model="formData.brokerName" 
-                  placeholder="Broker Name (auto select)" 
-                  class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
-                  readonly
-                />
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"><path d="m6 9 6 6 6-6"></path></svg>
-              </div>
-            </div>
-            
-            <div class="mb-6">
-              <label class="block mb-1.5 text-sm text-[#cccccc]">Broker Agency <span class="text-[#50B9E0]">*</span></label>
-              <div class="relative">
-                <input 
-                  type="text" 
-                  v-model="formData.brokerAgency" 
-                  placeholder="Broker Agency (auto select)" 
-                  class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
-                  readonly
-                />
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"><path d="m6 9 6 6 6-6"></path></svg>
-              </div>
-            </div>
+            <InputField
+              label="Full Name"
+              placeholder="Timothy Ricks"
+              :modelValue="formData.fullName"
+              @update:modelValue="$event => (formData.fullName = $event)"
+              :required="true"
+            />
+            <InputField
+              label="Email"
+              placeholder="Enter your Email"
+              :modelValue="formData.email"
+              @update:modelValue="$event => (formData.email = $event)"
+              :required="true"
+              class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
+            />
+            <InputField
+              variant="tel"
+              label="Contact Number"
+              placeholder="Enter your Number"
+              :modelValue="formData.contactNumber"
+              @update:modelValue="$event => (formData.contactNumber = $event)"
+            />
+            <InputField
+              label="Unit Number"
+              placeholder="1702 (Select / Search From Available Units)"
+              :modelValue="formData.unitNumber"
+              @update:modelValue="$event => (formData.unitNumber = $event)"
+              :required="true"
+            />
+            <InputField
+              label="Broker Name"
+              placeholder="Broker Name (auto select)"
+              :modelValue="formData.brokerName"
+              @update:modelValue="$event => (formData.brokerName = $event)"
+              :readonly="true"
+              :arrowIcon="true"
+            />
+            <InputField
+              label="Broker Agency"
+              type="text"
+              placeholder="Broker Agency (auto select)"
+              :modelValue="formData.brokerAgency"
+              @update:modelValue="$event => (formData.brokerAgency = $event)"
+              :readonly="true"
+              :arrowIcon="true"
+            />
             
             <button @click="submit" type="submit" class="w-full py-2 bg-[#50B9E0] text-black border-none rounded-md font-medium cursor-pointer transition-colors hover:bg-[#3da5d4]">
               Submit Interest
@@ -267,85 +234,52 @@
             <p class="text-[#999999] mb-6 text-sm">Let us know what you're looking for</p>
             
             <form @submit.prevent="submitForm">
-              <div class="mb-4">
-                <label class="block mb-1.5 text-sm text-[#cccccc]">Full Name <span class="text-[#50B9E0]">*</span></label>
-                <input 
-                  type="text" 
-                  v-model="formData.fullName" 
-                  placeholder="Timothy Ricks" 
-                  class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
-                  required
-                />
-              </div>
-              
-              <div class="mb-4">
-                <label class="block mb-1.5 text-sm text-[#cccccc]">Email <span class="text-[#50B9E0]">*</span></label>
-                <input 
-                  type="email" 
-                  v-model="formData.email" 
-                  placeholder="Enter your Email" 
-                  class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
-                  required
-                />
-              </div>
-              
-              <div class="mb-4">
-                <label class="block mb-1.5 text-sm text-[#cccccc]">Contact Number <span class="text-[#50B9E0]">*</span></label>
-                <vue-tel-input
-                  v-model="formData.contactNumber"
-                  :inputOptions="{
-                    placeholder: 'Enter your Number',
-                    classes: 'w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none'
-                  }"
-                  :dropdownOptions="{
-                    showDialCodeInSelection: true,
-                    showFlags: true,
-                    showDialCodeInList: true,
-                    dropdownClass: 'bg-[#1a1a1a] border border-[#333333] text-white'
-                  }"
-                  mode="international"
-                  required
-                />
-              </div>
-              
-              <div class="mb-4">
-                <label class="block mb-1.5 text-sm text-[#cccccc]">Unit Number <span class="text-[#50B9E0]">*</span></label>
-                <input 
-                  type="text" 
-                  v-model="formData.unitNumber" 
-                  placeholder="1702 (Select / Search From Available Units)" 
-                  class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
-                  required
-                />
-              </div>
-              
-              <div class="mb-4">
-                <label class="block mb-1.5 text-sm text-[#cccccc]">Broker Name <span class="text-[#50B9E0]">*</span></label>
-                <div class="relative">
-                  <input 
-                    type="text" 
-                    v-model="formData.brokerName" 
-                    placeholder="Broker Name (auto select)" 
-                    class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
-                    readonly
-                  />
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"><path d="m6 9 6 6 6-6"></path></svg>
-                </div>
-              </div>
-              
-              <div class="mb-6">
-                <label class="block mb-1.5 text-sm text-[#cccccc]">Broker Agency <span class="text-[#50B9E0]">*</span></label>
-                <div class="relative">
-                  <input 
-                    type="text" 
-                    v-model="formData.brokerAgency" 
-                    placeholder="Broker Agency (auto select)" 
-                    class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
-                    readonly
-                  />
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"><path d="m6 9 6 6 6-6"></path></svg>
-                </div>
-              </div>
+              <InputField
+                label="Full Name"
+                placeholder="Timothy Ricks"
+                :modelValue="formData.fullName"
+                @update:modelValue="$event => (formData.fullName = $event)"
+                :required="true"
+              />
+              <InputField
+                label="Email"
+                placeholder="Enter your Email"
+                :modelValue="formData.email"
+                @update:modelValue="$event => (formData.email = $event)"
+                :required="true"
+                class="w-full px-3 py-2 rounded-md bg-[#1a1a1a] border border-[#333333] text-[#50B9E0] text-sm placeholder-[#666666] focus:border-[#50B9E0] focus:outline-none"
+              />
+              <InputField
+                variant="tel"
+                label="Contact Number"
+                placeholder="Enter your Number"
+                :modelValue="formData.contactNumber"
+                @update:modelValue="$event => (formData.contactNumber = $event)"
+              />
+              <InputField
+                label="Unit Number"
+                placeholder="1702 (Select / Search From Available Units)"
+                :modelValue="formData.unitNumber"
+                @update:modelValue="$event => (formData.unitNumber = $event)"
+                :required="true"
+              />
+              <InputField
+                label="Broker Name"
+                placeholder="Broker Name (auto select)"
+                :modelValue="formData.brokerName"
+                @update:modelValue="$event => (formData.brokerName = $event)"
+                :readonly="true"
+                :arrowIcon="true"
+              />
+              <InputField
+                label="Broker Agency"
+                type="text"
+                placeholder="Broker Agency (auto select)"
+                :modelValue="formData.brokerAgency"
+                @update:modelValue="$event => (formData.brokerAgency = $event)"
+                :readonly="true"
+                :arrowIcon="true"
+              />
               
               <button @click="submit" type="submit" class="w-full py-2 bg-[#50B9E0] text-black border-none rounded-md font-medium cursor-pointer transition-colors hover:bg-[#3da5d4]">
                 Submit Interest
@@ -398,7 +332,7 @@
   import unit2 from "@/assets/images/units/unit2.png";
   import { Pagination } from "swiper/modules";
   import MainSection from '~/components/VoiceInput.vue';
-  
+  import InputField from '~/components/InputField.vue';
   const router = useRouter();
   
   definePageMeta({
