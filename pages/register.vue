@@ -227,7 +227,7 @@
       
         <div class="col-span-2 flex justify-end">
           <div 
-            class="flex-1 bg-[#111111] min-w-[29rem] max-w-[29rem] rounded-xl p-8 flex flex-col justify-center px-20"
+            class="flex-1 z-1 bg-[#111111] min-w-[29rem] max-w-[29rem] rounded-xl p-8 flex flex-col justify-center px-20"
             :style="{ boxShadow: '0px 10px 60px 15px rgba(255, 255, 255, 0.4)' }"
           >
             <h2 class="text-xl font-semibold mb-2 font-machina-plain">Register Your Interest</h2>
