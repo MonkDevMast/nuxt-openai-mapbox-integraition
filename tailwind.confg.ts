@@ -51,6 +51,10 @@ module.exports = {
           'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
           'none': '0 0 #0000',
         },
+        screens: {
+          'comparisonDesktop': '1150px',
+          'comparisonMobile': '500px',
+        }
         // Extend other theme properties as needed (e.g., screens, borderRadius, etc.)
       },
     },

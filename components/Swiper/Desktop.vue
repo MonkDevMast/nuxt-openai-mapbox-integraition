@@ -402,7 +402,7 @@ onMounted(async () => {
   </Swiper>
 </template>
 
-<style >
+<style scoped>
 /* Loading overlay styles */
 .loading-overlay {
   position: fixed;

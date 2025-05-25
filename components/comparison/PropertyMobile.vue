@@ -2,7 +2,7 @@
   <!-- Property 1 - Mobile -->
    
   <div class="bg-[#0e0e0e] rounded-lg p-4 flex flex-col gap-4" style="width: 80vw">
-    <div class="flex justify-between items-start">
+    <div class="flex flex-col comparisonMobile:flex-row justify-between items-start">
       <div>
         <h2 class="text-lg font-bold">{{ data.var }}</h2>
         <p class="text-sm text-gray-400">View : {{ data.view }}</p>

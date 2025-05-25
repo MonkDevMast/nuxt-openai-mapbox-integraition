@@ -117,13 +117,13 @@ const pauseAllVideosExcept = (index: number) => {
             class="flex flex-col bg-white/5 backdrop-blur-xl rounded-xl shadow-lg md:py-5 md:p-5 md:px-8 md:min-w-[1000px] w-[93vw] md:w-full h-[25rem] md:h-full overflow-hidden md:transition-all duration-300 ease-in-out relative div-card"
           >
             <div class="text-white w-full mb-4 max-h-[15%]">
-              <div class="flex justify-between items-center">
+              <div class="flex justify-between items-center p-3">
                 <div class="text-[20px] sm:text-[20px] font-medium leading-none">
                   {{ i % 2 != 0 ? "Unit Walk Through" : "Amenities Walk Through" }}
                 </div>
                 <div class="mt-5 mb-3">
                   <div class="font-normal text-sm text-gray-400">
-                    Unit #{{ unitId }}
+                    Unit {{ unitId ?? 1905 }}
                   </div>
                 </div>
               </div>
@@ -215,13 +215,10 @@ const pauseAllVideosExcept = (index: number) => {
     transform: initial; /* Reset transform */
     height: auto; /* Reset height */
   }
-  .outer-video-swiper .swiper-pagination {
-    bottom: 0px;
-  }
 }
 .outer-video-swiper .swiper-pagination {
   position: absolute;
-  bottom: -40px;
+  bottom: -20px;
   left: 0;
   right: 0;
   text-align: center;

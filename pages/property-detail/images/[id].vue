@@ -62,7 +62,7 @@ onMounted(async () => {
               Interior Pictures
             </div>
             <div class="font-normal text-sm text-gray-400">
-              Unit #{{ unitId }}
+              Unit {{ unitId ?? 1905 }}
             </div>
           </div>
         </div>
@@ -138,5 +138,8 @@ onMounted(async () => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+.swiper-pagination-horizontal {
+  bottom: -30px;
 }
 </style>
