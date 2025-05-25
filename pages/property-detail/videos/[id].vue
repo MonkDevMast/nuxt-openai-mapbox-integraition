@@ -215,10 +215,13 @@ const pauseAllVideosExcept = (index: number) => {
     transform: initial; /* Reset transform */
     height: auto; /* Reset height */
   }
+  .outer-video-swiper .swiper-pagination {
+    bottom: 0px;
+  }
 }
 .outer-video-swiper .swiper-pagination {
   position: absolute;
-  /* bottom: -40px; */
+  bottom: -40px;
   left: 0;
   right: 0;
   text-align: center;
