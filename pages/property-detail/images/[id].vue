@@ -56,8 +56,8 @@ onMounted(async () => {
         key="content"
         class="flex flex-col bg-black backdrop-blur-xl shadow-lg rounded-l-3xl mr-1 sm:mr-0 pl-5 py-5 sm:pl-9 sm:py-5 min-w-[70vw] w-full h-[40%] min-h-[400px] sm:h-[70%] overflow-hidden md:ml-[20%] ml-3 image-box"
       >
-        <div class="text-white w-full mb-4 max-h-[10%] max-w-[700px]">
-          <div class="flex items-center justify-between">
+        <div class="text-white w-full mb-4 max-h-[10%] max-w-[1000px]">
+          <div class="flex items-center justify-between pr-3">
             <div class="text-[16px] sm:text-[18px] font-medium leading-none">
               Interior Pictures
             </div>
@@ -99,7 +99,7 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
+<style>
 .inner-image-swiper.swiper {
   overflow-y: visible !important;
   overflow-x: clip !important;
@@ -141,5 +141,14 @@ onMounted(async () => {
 }
 .swiper-pagination-horizontal {
   bottom: -30px;
+}
+
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: -40px;
+  top: var(--swiper-pagination-top, auto);
+  left: 0;
 }
 </style>

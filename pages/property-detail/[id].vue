@@ -218,7 +218,7 @@ const unitId = route.params.id;
   </div>
 </template>
 
-<style>
+<style scoped>
 .detail-card {
   border: 2px solid #595959;
   box-shadow: 0px 0px 150px 0px rgba(167, 167, 167, 0.8);

@@ -545,7 +545,7 @@ const onInnerSwiperSlideChange = (swiper: any) => {
 .outer-swiper .swiper-pagination,
 .outer-mobile-swiper .swiper-pagination {
   position: absolute;
-  bottom: -40px;
+  bottom: -30px !important;
   left: 0;
   right: 0;
   text-align: center;

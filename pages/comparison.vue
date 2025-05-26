@@ -139,13 +139,13 @@ const toggleVideo = (videoRefName) => {
   
   /* Hide scrollbar but keep functionality */
   .md\:hidden::-webkit-scrollbar {
-    display: none;
+    display: block;
   }
   
-  .md\:hidden {
+  /* .md\:hidden {
     -ms-overflow-style: none;
     scrollbar-width: none;
-  }
+  } */
 }
 
 .swiper-pagination-bullet.swiper-pagination-bullet-active,
