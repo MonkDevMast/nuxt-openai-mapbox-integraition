@@ -223,7 +223,7 @@ const pauseAllVideosExcept = (index: number) => {
 }
 @media (max-width: 400px) {
   .outer-video-swiper .swiper-pagination {
-    bottom: 10px !important;
+    bottom: 50px !important;
     left: 50%;
     transform: translateX(25%);
   }

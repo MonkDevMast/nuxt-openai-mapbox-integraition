@@ -151,4 +151,8 @@ onMounted(async () => {
   top: var(--swiper-pagination-top, auto);
   left: 0;
 }
+.inner-image-swiper > .swiper-pagination {
+  display: flex;
+  justify-content: start;
+}
 </style>
