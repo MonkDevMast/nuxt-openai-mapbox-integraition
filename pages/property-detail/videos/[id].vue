@@ -99,6 +99,7 @@ const pauseAllVideosExcept = (index: number) => {
         :spaceBetween="0"
         :touchEventsTarget="'container'"
         :grabCursor="true"
+        :loop="true"
         :breakpoints="{
           1005: {
             slidesPerView: 'auto',
@@ -112,6 +113,7 @@ const pauseAllVideosExcept = (index: number) => {
           :key="i" 
           class="swiper-slide-custom"
           @click="swiperInstance?.slideTo(i - 1)"
+          @click.stop=""
         >
           <div
             class="flex flex-col bg-white/5 backdrop-blur-xl rounded-xl shadow-lg md:py-5 md:p-5 md:px-8 md:min-w-[1000px] w-[93vw] md:w-full h-[25rem] md:h-full overflow-hidden md:transition-all duration-300 ease-in-out relative div-card"

@@ -73,6 +73,7 @@ onMounted(async () => {
             :pagination="{ clickable: true }"
             :spaceBetween="0"
             :slidesPerView="1.20"
+            :loop="true"
             :breakpoints="{
               500: {
                 slidesPerView: 'auto',
