@@ -47,7 +47,7 @@ const goToProperty = (i: number) => {
   emit("goToProperty", i);
 };
 
-const collapseView = () => {
+const collapseView = (i: number) => {
   emit('collapseview');
 };
 
@@ -404,7 +404,7 @@ const onInnerSwiperSlideChange = (swiper: any) => {
           </Swiper>
         </div>
         <div
-          @click.stop="isExpanded ? collapseView() : goToProperty(i)"
+          @click.stop="isExpanded ? collapseView(i) : goToProperty(i)"
           class="text-sm flex align-end mt-4 ml-2 md: ml-0 justify-start md:justify-end text-[#CBCBCB] md:mt-3 mr-2 sm:mr-0 h-[3%] cursor-pointer sm:h-[5%] view-more-button"
         >
           <span>
@@ -528,9 +528,9 @@ const onInnerSwiperSlideChange = (swiper: any) => {
   transition: margin-bottom 0.3s ease;
 }
 
-.outer-mobile-swiper {
-  /* box-shadow: 0px 0px 100px 0px rgba(167, 167, 167, 0.4) */
-}
+/* .outer-mobile-swiper {
+  box-shadow: 0px 0px 100px 0px rgba(167, 167, 167, 0.4)
+} */
 .outer-swiper .swiper-slide {
   width: auto !important;
   height: 100% !important;
@@ -809,9 +809,9 @@ video[controls]:hover + .video-play-button {
 
 /* Add these styles to the existing CSS section */
  
-.outer-mobile-swiper .swiper-slide:not(.swiper-slide-active) .div-card {
-  /* Remove this style */
-}
+/* .outer-mobile-swiper .swiper-slide:not(.swiper-slide-active) .div-card {
+  Remove this style
+} */
 
 .outer-mobile-swiper.swiper{
   box-shadow: 0px 0px 100px 0px rgba(167, 167, 167, 0.4) ;

@@ -31,12 +31,15 @@ const paginationVisible = computed(() => !isExpanded.value);
 const outerSwiperRef = ref<any>(null);
 const outerMobileSwiperRef = ref<any>(null);
 
+const detailData = ref();
 // Video control refs and state
 const videoRefs = ref<HTMLVideoElement[]>([]);
 const videoStates = ref<{isPlaying: boolean, hovered: boolean}[]>([]);
 
-const goToProperty = (i: number) => {
-  
+const goToProperty = (index: number) => {
+  console.log(index)
+  detailData.value = realEstateDatas.value.filter((data, i) => i == index)
+  console.log(detailData.value)
   const swiper = outerSwiperRef.value?.swiper;
   if (swiper) {
     swiper.allowTouchMove = false;
@@ -189,45 +192,6 @@ const preloadImages = () => {
   });
 };
 
-// Improved video control functions
-const toggleVideo = (index: number, event: Event) => {
-  event.stopPropagation();
-  const video = videoRefs.value[index];
-  if (!video) return;
-  
-  if (video.paused) {
-    video.play().catch(e => console.error("Video play failed:", e));
-  } else {
-    video.pause();
-  }
-};
-
-const onVideoPlay = (index: number) => {
-  if (videoStates.value[index]) {
-    videoStates.value[index].isPlaying = true;
-  }
-};
-
-const onVideoPause = (index: number) => {
-  if (videoStates.value[index]) {
-    videoStates.value[index].isPlaying = false;
-  }
-};
-
-const onVideoEnded = (index: number) => {
-  const video = videoRefs.value[index];
-  if (video && videoStates.value[index]) {
-    video.currentTime = 0;
-    videoStates.value[index].isPlaying = false;
-  }
-};
-
-const setVideoHover = (index: number, hovered: boolean) => {
-  if (videoStates.value[index]) {
-    videoStates.value[index].hovered = hovered;
-  }
-};
-
 watch(expanded, (newVal) => {
   const swiper = outerSwiperRef.value?.swiper;
   if (!swiper) return;
@@ -241,123 +205,6 @@ watch(expanded, (newVal) => {
   if (!newVal) swiper.mousewheel.enable();
 });
 
-
-const onSlideChange = (swiper: any) => {
-  // Pause all videos
-  videoRefs.value.forEach((video, index) => {
-    if (video) {
-      video.pause();
-      if (videoStates.value[index]) {
-        videoStates.value[index].isPlaying = false;
-      }
-    }
-  });
-};
-
-const onContentClick = (swiper: any, event: MouseEvent, slideIndex: number) => {
- 
-
-  console.log(swiper)
-  const activeIndex = swiper.activeIndex;
-  
-  if (activeIndex !== slideIndex) {
-    const clickedSlide = swiper.slides[slideIndex];
-    const currentActiveSlide = swiper.slides[activeIndex];
-    
-    if (clickedSlide && currentActiveSlide) {
-      clickedSlide.classList.add('slide-to-center');
-      currentActiveSlide.classList.add('slide-out');
-    }
-    
-    swiper.slideTo(slideIndex);
-    return;
-  }
-  
-  // goToProperty(slideIndex + 1);
-};
-
-const onMobileSwiperClick = (swiper: any, event: MouseEvent) => {
-  if (isExpanded.value) return;
-
-  const clickedSlide = (event.target as HTMLElement).closest('.swiper-slide');
-  if (!clickedSlide) return;
-
-  const viewMoreBtn = (event.target as HTMLElement).closest('.view-more-button');
-  if (viewMoreBtn) return;
-
-  const videoElement = (event.target as HTMLElement).closest('video');
-  const videoControls = (event.target as HTMLElement).closest('.video-play-button');
-  if (videoElement || videoControls) {
-    event.stopPropagation();
-    return;
-  }
-
-  const slideIndex = Array.from(swiper.slides).indexOf(clickedSlide);
-  
-  if (!clickedSlide.classList.contains('swiper-slide-active')) {
-    const currentActiveSlide = swiper.slides[swiper.activeIndex];
-    
-    if (clickedSlide && currentActiveSlide) {
-      clickedSlide.classList.add('slide-to-center');
-      currentActiveSlide.classList.add('slide-out');
-    }
-    
-    swiper.slideTo(slideIndex);
-    return;
-  }
-  
-  // goToProperty(slideIndex + 1);
-};
-
-const onTouchStart = (swiper: any) => {
-  
-};
-
-const onSwiperClick = (swiper: any, event: MouseEvent) => {
-  // Check if the click originated from the inner swiper
-  const innerSwiper = (event.target as HTMLElement).closest('.inner-swiper');
-  if (innerSwiper) {
-    event.stopPropagation();
-    return;
-  }
-
-  if (isExpanded.value) return;
-
-  const clickedSlide = (event.target as HTMLElement).closest('.swiper-slide');
-  if (!clickedSlide) return;
-
-  // Check if click was on the view more button
-  const viewMoreBtn = (event.target as HTMLElement).closest('.view-more-button');
-  if (viewMoreBtn) return;
-
-  // Check if click was on video controls
-  const videoElement = (event.target as HTMLElement).closest('video');
-  const videoControls = (event.target as HTMLElement).closest('.video-play-button');
-  if (videoElement || videoControls) {
-    event.stopPropagation();
-    return;
-  }
-
-  // Only allow slide switching
-  if (!clickedSlide.classList.contains('swiper-slide-active')) {
-    const slideIndex = Array.from(swiper.slides).indexOf(clickedSlide);
-    swiper.slideTo(slideIndex);
-  }
-};
-
-// Add this new function to handle inner swiper slide change
-const onInnerSwiperSlideChange = (swiper: any) => {
-  const outerSwiper = outerSwiperRef.value?.swiper;
-  if (!outerSwiper) return;
-
-  // Check if we're at the last slide of inner swiper
-  if (swiper.isEnd) {
-    // Slide to next slide in outer swiper
-    outerSwiper.slideNext();
-    // Reset inner swiper to first slide
-    swiper.slideTo(0);
-  }
-};
 
 onMounted(async () => {
   // Initialize video states for all slides
@@ -382,7 +229,7 @@ const realEstateDatas = ref([
   {
     var: '2BHK - Corner Unit',
     view: 'Full Burj Khalifa + Downtown Skyline',
-    unit: '1902',
+    unit: '1901',
     size: '1260 sq ft',
     floor: 'Floor 11',
     price: 'AED 2,150,000',
@@ -395,14 +242,16 @@ const realEstateDatas = ref([
     ],
     bedrooms: '2',
     bathrooms: '2',
+    unitAvailable: '11',
+    timeForCompletion: '11 months',
   },
   {
     var: '2BR Duplex',
     view: 'Pool-Facing Premium',
-    unit: '1905',
+    unit: '1902',
     size: '1560 sq ft',
     floor: 'Podium Floor 2',
-    price: 'AED 2,150,000',
+    price: 'AED 3,150,000',
     features: [
       'Double-height Ceiling',
       'Private Balcony',
@@ -412,14 +261,16 @@ const realEstateDatas = ref([
     ],
     bedrooms: '2',
     bathrooms: '2',
+    unitAvailable: '12',
+    timeForCompletion: '12 months',
   },
   {
     var: '2BR Duplex',
     view: 'Pool-Facing Premium',
-    unit: '1901',
+    unit: '1903',
     size: '1560 sq ft',
     floor: 'Podium Floor 2',
-    price: 'AED 2,150,000',
+    price: 'AED 6,150,000',
     features: [
       'Double-height Ceiling',
       'Private Balcony',
@@ -429,6 +280,27 @@ const realEstateDatas = ref([
     ],
     bedrooms: '2',
     bathrooms: '2',
+    unitAvailable: '10',
+    timeForCompletion: '10 months',
+  },
+  {
+    var: '2KK Duplex',
+    view: 'Pool-Facing Premium',
+    unit: '1904',
+    size: '1960 sq ft',
+    floor: 'Podium Floor 9',
+    price: 'AED 1,150,000',
+    features: [
+      'Double-height Ceiling',
+      'Private Balcony',
+      'Walk-In Closet',
+      'Smart Entry System',
+      'Direct Amenity Access',
+    ],
+    bedrooms: '2',
+    bathrooms: '2',
+    unitAvailable: '9',
+    timeForCompletion: '9 months',
   }
 ]);
 </script>
@@ -465,7 +337,7 @@ const realEstateDatas = ref([
     </div>
     </div>
    
-    <div class="flex justify-center relative bottom-[15rem] mb-44 md:bottom-32">
+    <div class="flex justify-center relative bottom-[15rem] pt-8 md:bottom-32">
       <transition name="fade-slide">
         <div 
           v-if="isExpanded" 
@@ -478,23 +350,23 @@ const realEstateDatas = ref([
           >
             <div class="flex items-center gap-1 flex-shrink-0">
               <Icon name="line-md:home-simple-twotone" class="text-[rgba(242,249,253,0.7)] hidden sm:block" />
-              <span class="text-[rgba(242,249,253,0.7)]">Unit Type Name : <span class="text-white">2BHK</span></span>
+              <span class="text-[rgba(242,249,253,0.7)]">Unit Type Name : <span class="text-white">{{detailData[0].var ?? '2BHK'}}</span></span>
             </div>
             <div class="flex items-center gap-1 flex-shrink-0">
               <Icon name="famicons:apps-sharp" class="text-[rgba(242,249,253,0.7)] hidden sm:block" />
-              <span class="text-[rgba(242,249,253,0.7)]">Area : <span class="text-white">1,260 sq ft</span></span>
+              <span class="text-[rgba(242,249,253,0.7)]">Area : <span class="text-white">{{ detailData[0].size ?? '1,260 sq ft' }}</span></span>
             </div>
             <div class="flex items-center gap-1 flex-shrink-0">
               <Icon name="ph:bookmark-simple" class="text-[rgba(242,249,253,0.7)] hidden sm:block" />
-              <span class="text-[rgba(242,249,253,0.7)]">Units Available : <span class="text-white">11</span></span>
+              <span class="text-[rgba(242,249,253,0.7)]">Units Available : <span class="text-white">{{ detailData[0].unitAvailable ?? 11 }}</span></span>
             </div>
             <div class="flex items-center gap-1 flex-shrink-0">
               <Icon name="material-symbols:calendar-month-outline" class="text-[rgba(242,249,253,0.7)] hidden sm:block" />
-              <span class="text-[rgba(242,249,253,0.7)]">Time for Completion : <span class="text-white">11 months</span></span>
+              <span class="text-[rgba(242,249,253,0.7)]">Time for Completion : <span class="text-white">{{ detailData[0].timeForCompletion ?? '11 months' }}</span></span>
             </div>
             <div class="flex items-center gap-1 flex-shrink-0">
               <Icon name="ph:sun" class="text-[rgba(242,249,253,0.7)] hidden sm:block" />
-              <span class="text-[rgba(242,249,253,0.7)]">View : <span class="text-white">Burj View</span></span>
+              <span class="text-[rgba(242,249,253,0.7)]">View : <span class="text-white">{{ detailData[0].view ?? 'Burj View' }}</span></span>
             </div>
           </div>
 

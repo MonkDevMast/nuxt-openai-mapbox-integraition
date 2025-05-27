@@ -39,16 +39,18 @@ const isLoading = ref(true);
 const expanded = ref(false);
 const paginationVisible = computed(() => !isExpanded.value);
 const outerSwiperRef = ref<any>(null);
-
+const touchMove = ref<boolean>(true);
 // Video control refs and state
 const videoRefs = ref<HTMLVideoElement[]>([]);
 const videoStates = ref<{isPlaying: boolean, hovered: boolean}[]>([]);
 
 const goToProperty = (i: number) => {
+  isExpanded.value = true;
   emit("goToProperty", i);
 };
 
 const collapseView = () => {
+  isExpanded.value = false;
   emit('collapseview');
 };
 
@@ -147,6 +149,11 @@ watch(expanded, (newVal) => {
   if (!newVal) swiper.mousewheel.enable();
 });
 
+watch(isExpanded, (newVal) => {
+  console.log(newVal)
+  touchMove.value = !newVal;
+  console.log(`expanded ${isExpanded.value}`)
+})
 
 const onSlideChange = (swiper: any) => {
   // Pause all videos
@@ -262,17 +269,10 @@ onMounted(async () => {
     :spaceBetween="30"
     :centeredSlides="true"
     :loop="true"
-    :allowTouchMove="!expanded"
-    :freeMode="!isExpanded"
-    :initialSlide="1"
-    :mousewheel="{
-      enabled: true,
-      forceToAxis: true,
-      releaseOnEdges: true,
-      sensitivity: 1,
-      thresholdDelta: 50,
-      thresholdTime: 500
-    }"
+    :allowTouchMove="touchMove"
+    :freeMode="touchMove"
+    :initialSlide="0"
+    
     :coverflowEffect="{
       rotate: 0,
       stretch: -100,
@@ -280,9 +280,6 @@ onMounted(async () => {
       modifier: 1.5,
       slideShadows: false,
     }"
-      @click="(swiper, event) => onSwiperClick(swiper, event)"
-      @slideChange="onSlideChange"
-      @touchStart="(swiper) => onTouchStart(swiper)"
     
     :class="`outer-swiper h-[70vh] hidden! md:block! w-full max-w-none`"
   >
