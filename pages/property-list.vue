@@ -119,7 +119,7 @@ const collapseView = () => {
   const eventnone = swiper2?.querySelectorAll(".swiper-wrapper");
   eventnone[0].style.pointerEvents = 'all'
   swiper1.allowTouchMove = true;
-  swiper1.mousewheel.enable();
+  // swiper1.mousewheel.enable();
   const swiper = outerSwiperRef.value?.swiper;
   if (swiper) {
     swiper.allowTouchMove = true;
