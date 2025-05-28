@@ -37,15 +37,33 @@ const videoRefs = ref<HTMLVideoElement[]>([]);
 const videoStates = ref<{isPlaying: boolean, hovered: boolean}[]>([]);
 
 const goToProperty = (index: number) => {
-  console.log(index)
   detailData.value = realEstateDatas.value.filter((data, i) => i == index)
-  console.log(detailData.value)
   const swiper1 = document.querySelector('.propertyList-swiper').swiper;
-  console.log(swiper1)
+
+  const swiper2 = document.querySelector('.outer-mobile-swiper') as HTMLElement;
+  const eventnone = swiper2?.querySelectorAll(".swiper-wrapper");
+  eventnone[0].style.pointerEvents = 'none'
+
+  const button = swiper2.querySelectorAll('span')
+  console.log(button.length)
+
+  const innerSwipers = swiper2.querySelectorAll('.mobile-inner-swiper');
+  console.log(innerSwipers.length)
+  // innerSwipers[0].style.pointerEvents = 'all'
+  for (let i = 0; i < innerSwipers.length; i++) {
+    innerSwipers[i].style.pointerEvents = 'all'
+  }
+  for (let i = 0; i < button?.length; i++){
+    button[i].style.pointerEvents = 'all'
+  }
+  
+  // swiper2?.style?.pointerEvents = 'none';
+  // swiper2?.classList.add('pointer-none');
+  // swiper2.swiperwrapper.addClas
   if(swiper1) {
     console.log('Mobile Go to property')
     swiper1.allowTouchMove = false;
-    swiper1.mousewheel.disable();
+    // swiper1.mousewheel.disable();
   }
   // const swiper = outerSwiperRef.value?.swiper;
   // if (swiper) {
@@ -97,7 +115,9 @@ const goToProperty = (index: number) => {
 
 const collapseView = () => {
   const swiper1 = document.querySelector('.swiper').swiper;
-  console.log(swiper1)
+  const swiper2 = document.querySelector('.outer-mobile-swiper') as HTMLElement;
+  const eventnone = swiper2?.querySelectorAll(".swiper-wrapper");
+  eventnone[0].style.pointerEvents = 'all'
   swiper1.allowTouchMove = true;
   swiper1.mousewheel.enable();
   const swiper = outerSwiperRef.value?.swiper;
@@ -889,4 +909,8 @@ video[controls]:hover + .video-play-button {
   touch-action: pan-x;
 }
 
+.pointer-none {
+  pointer-events: none in !important;
+  cursor: none in !important;
+}
 </style>

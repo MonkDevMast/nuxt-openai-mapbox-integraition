@@ -295,7 +295,8 @@ onMounted(async () => {
 <template>
   <!-- Mobile Swiper -->
   <Swiper
-    ref="outerSwiperRef"
+    id="outerMobileSwiper"
+    ref="outMobileSwiper"
     :modules="[Pagination, EffectCoverflow]"
     :pagination="{ clickable: true }"
     :slidesPerView="1"
@@ -910,4 +911,8 @@ video[controls]:hover + .video-play-button {
   touch-action: pan-x;
 }
 
+.outer-mobile-swiper .pointer-none {
+  pointer-events: none in !important;
+  cursor: none in !important;
+}
 </style>
