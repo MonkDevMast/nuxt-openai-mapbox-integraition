@@ -38,16 +38,20 @@ const isLoading = ref(true);
 const expanded = ref(false);
 const outerSwiperRef = ref<any>(null);
 const outerMobileSwiperRef = ref<any>(null);
+const touchMove = ref<boolean>(true);
 
 // Video control refs and state
 const videoRefs = ref<HTMLVideoElement[]>([]);
 const videoStates = ref<{isPlaying: boolean, hovered: boolean}[]>([]);
 
 const goToProperty = (i: number) => {
+  console.log("GOTOPROPERTY")
+  isExpanded.value = true;
   emit("goToProperty", i);
 };
 
-const collapseView = (i: number) => {
+const collapseView = () => {
+  isExpanded.value = false;
   emit('collapseview');
 };
 
@@ -146,6 +150,11 @@ watch(expanded, (newVal) => {
   if (!newVal) swiper.mousewheel.enable();
 });
 
+watch(isExpanded, (newVal) => {
+  console.log(newVal)
+  touchMove.value = newVal;
+  console.log(`expanded ${isExpanded.value}`)
+})
 
 const onSlideChange = (swiper: any) => {
   // Pause all videos
@@ -264,42 +273,42 @@ const onInnerSwiperSlideChange = (swiper: any) => {
   }
 };
 
-// onMounted(async () => {
-//   // Initialize video states for all slides
-//   videoStates.value = Array(5).fill(null).map(() => ({
-//     isPlaying: false,
-//     hovered: false
-//   }));
+onMounted(async () => {
+  // Initialize video states for all slides
+  videoStates.value = Array(5).fill(null).map(() => ({
+    isPlaying: false,
+    hovered: false
+  }));
   
-//   await preloadImages();
+  await preloadImages();
   
-//   setTimeout(() => {
-//     isLoading.value = false;
+  setTimeout(() => {
+    isLoading.value = false;
     
-//     setTimeout(() => {
-//       animateOnLoad();
-//     }, 50);
-//   }, 200);
-// });
+    setTimeout(() => {
+      animateOnLoad();
+    }, 50);
+  }, 200);
+});
 </script>
 
 <template>
   <!-- Mobile Swiper -->
   <Swiper
-    ref="outerMobileSwiperRef"
+    ref="outerSwiperRef"
     :modules="[Pagination, EffectCoverflow]"
     :pagination="{ clickable: true }"
     :slidesPerView="1"
     :spaceBetween="20"
     :centeredSlides="true"
     :loop="true"
-    :allowTouchMove="!isExpanded"
-    :freeMode="!isExpanded"
+    :allowTouchMove="touchMove"
+    :freeMode="touchMove"
     :grabCursor="true"
     :mousewheel="true" 
     @slideChange="onSlideChange"
     @touchStart="(swiper) => onTouchStart(swiper)"
-    class="outer-mobile-swiper mb-44 md:mb-9 h-[24rem]  md:h-full md:hidden! px-3! sm:mb-0"
+    class="outer-mobile-swiper propertyList-swiper mb-44 md:mb-9 h-[24rem]  md:h-full md:hidden! px-3! sm:mb-0"
   >
     <SwiperSlide
       v-for="(data, i) in datas"
@@ -404,7 +413,7 @@ const onInnerSwiperSlideChange = (swiper: any) => {
           </Swiper>
         </div>
         <div
-          @click.stop="isExpanded ? collapseView(i) : goToProperty(i)"
+          @click.stop="isExpanded ? collapseView() : goToProperty(i)"
           class="text-sm flex align-end mt-4 ml-2 md: ml-0 justify-start md:justify-end text-[#CBCBCB] md:mt-3 mr-2 sm:mr-0 h-[3%] cursor-pointer sm:h-[5%] view-more-button"
         >
           <span>

@@ -40,11 +40,18 @@ const goToProperty = (index: number) => {
   console.log(index)
   detailData.value = realEstateDatas.value.filter((data, i) => i == index)
   console.log(detailData.value)
-  const swiper = outerSwiperRef.value?.swiper;
-  if (swiper) {
-    swiper.allowTouchMove = false;
-    swiper.mousewheel.disable();
+  const swiper1 = document.querySelector('.propertyList-swiper').swiper;
+  console.log(swiper1)
+  if(swiper1) {
+    console.log('Mobile Go to property')
+    swiper1.allowTouchMove = false;
+    swiper1.mousewheel.disable();
   }
+  // const swiper = outerSwiperRef.value?.swiper;
+  // if (swiper) {
+  //   swiper.allowTouchMove = false;
+  //   swiper.mousewheel.disable();
+  // }
 
   // Pause all videos when expanding
   expanded.value = true
@@ -89,6 +96,10 @@ const goToProperty = (index: number) => {
 };
 
 const collapseView = () => {
+  const swiper1 = document.querySelector('.swiper').swiper;
+  console.log(swiper1)
+  swiper1.allowTouchMove = true;
+  swiper1.mousewheel.enable();
   const swiper = outerSwiperRef.value?.swiper;
   if (swiper) {
     swiper.allowTouchMove = true;

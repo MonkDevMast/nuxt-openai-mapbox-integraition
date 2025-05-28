@@ -8,20 +8,20 @@ import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import { computed } from 'vue';
 
-const router = useRouter();
-
 const props = defineProps<{
   datas: Array<Record<string, any>>;
 }>();
 
-const datas = props.datas;
+const isExpanded = defineModel('isExpanded');
 
 const emit = defineEmits<{
   (e: 'collapseview'): void;
   (e: 'goToProperty', index: number): void;
 }>();
 
-const isExpanded = defineModel('isExpanded');
+const datas = props.datas;
+
+const router = useRouter();
 
 useHead({
   title: "Rechitta - Property List",
@@ -40,6 +40,7 @@ const expanded = ref(false);
 const paginationVisible = computed(() => !isExpanded.value);
 const outerSwiperRef = ref<any>(null);
 const touchMove = ref<boolean>(true);
+
 // Video control refs and state
 const videoRefs = ref<HTMLVideoElement[]>([]);
 const videoStates = ref<{isPlaying: boolean, hovered: boolean}[]>([]);
@@ -151,7 +152,7 @@ watch(expanded, (newVal) => {
 
 watch(isExpanded, (newVal) => {
   console.log(newVal)
-  touchMove.value = !newVal;
+  touchMove.value = newVal;
   console.log(`expanded ${isExpanded.value}`)
 })
 
@@ -281,7 +282,7 @@ onMounted(async () => {
       slideShadows: false,
     }"
     
-    :class="`outer-swiper h-[70vh] hidden! md:block! w-full max-w-none`"
+    :class="`outer-swiper propertyList-swiper h-[70vh] hidden! md:block! w-full max-w-none`"
   >
     <SwiperSlide
       v-for="(data, i) in datas"
