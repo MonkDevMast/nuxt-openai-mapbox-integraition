@@ -105,7 +105,7 @@ const goToProperty = (index: number) => {
     activeSlide?.classList.add("expanded");
     outerSwiper.classList.add("expanded");
     
-    outerSwiper.style.marginBottom = "-80px";
+    // outerSwiper.style.marginBottom = "-80px";
     const pagination = outerSwiper.querySelector('.swiper-pagination') as HTMLElement;
     if (pagination) {
       pagination.style.display = 'none';
